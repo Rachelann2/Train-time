@@ -16,7 +16,7 @@ var traintime;
 var destiny;
 var firsttime;
 var frequent;
-var nextarrival;
+var arrivalTime;
 var minsAway;
 
 
@@ -38,6 +38,7 @@ $("#submit-btn").on("click", function (event) {
     //pull and store values from input
     traintime = $("#train-time").val().trim();
     destiny = $("#destination").val().trim();
+    arrivalTime = $("#train-arrival").val().trim();
     firsttime = $("#1train-time").val().trim();
     frequent = $("#frequency-min").val().trim();
 
@@ -76,7 +77,6 @@ $("#submit-btn").on("click", function (event) {
     database.ref().push({
         traintime: traintime,
         destiny: destiny,
-        firsttime: firsttime,
         arrivalTime: nextTrain,
         frequent: frequent,
         minutesAway: tMinutesTillTrain
@@ -88,8 +88,10 @@ database.ref().on("child_added", function (snapshot) {
     var trainTable = $(".table");
     traintime = snapshot.val().traintime;
     destiny = snapshot.val().destiny;
-    firsttime = snapshot.val().firsttime;
+
+    //firsttime = snapshot.val().firsttime;
     frequent = snapshot.val().frequent;
+    arrivalTime = snapshot.val().arrivalTime;
     minutesAway = snapshot.val().minutesAway;
     console.log(snapshot.val());
     console.log(traintime);
@@ -100,8 +102,9 @@ database.ref().on("child_added", function (snapshot) {
     row = $("<tr>");
     row.append("<td>" + snapshot.val().traintime + "</td>");
     row.append("<td>" + snapshot.val().destiny + "</td>");
-    row.append("<td>" + snapshot.val().firsttime + "</td>");
+    //row.append("<td>" + snapshot.val().firsttime + "</td>");
     row.append("<td>" + snapshot.val().frequent + "</td>");
+    row.append("<td>" + snapshot.val().arrivalTime + "</td>");
     row.append("<td>" + snapshot.val().minutesAway + "</td>");
     trainTable.append(row);
 })
